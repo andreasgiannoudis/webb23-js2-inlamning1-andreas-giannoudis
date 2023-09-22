@@ -1,0 +1,85 @@
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+
+    background: rgb(219,219,238);
+    background: linear-gradient(90deg, rgba(219,219,238,1) 11%, rgba(211,187,233,1) 52%, rgba(132,157,224,1) 100%);
+  }
+
+  .welcome {
+    text-align: center;
+  }
+  
+
+  .user-name-form {
+    margin: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+
+  .user-input-name {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #3498db;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+
+  .user-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3498db;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s;
+  }
+  
+  .user-button:hover {
+    background-color: #2980b9; 
+  }
+  
+
+  .highscore-div {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.highscore-div h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.highscore {
+    list-style-type: none;
+    padding: 0;
+}
+
+.highscore li {
+    margin-bottom: 10px;
+}
+
+.highscore li span {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.contaienr {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.rps {
+  max-width: 70px;
+  max-height: 70px;
+
+}
