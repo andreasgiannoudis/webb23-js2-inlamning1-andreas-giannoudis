@@ -15,7 +15,9 @@ const gameContainer = document.querySelector('#gameContainer');
 const h2ChoiceInfo = document.createElement('h2');
 const h3Points = document.createElement('h3');
 const computerImg = document.querySelector('#computerImg');
+const btnStartNewGame = document.createElement('button');
 
+getHighscore().then(displayHighscore);
 
 formNameOfPlayer.addEventListener('submit', async event=>{
     event.preventDefault();
@@ -24,6 +26,15 @@ formNameOfPlayer.addEventListener('submit', async event=>{
     const h3Name = document.createElement('h3');
     h3Name.innerText = `Hello ${playerName}, let's play the rock paper scissors game!`;
     welcomePlayer.append(h3Name);
+
+    if (playerName) {
+        // Enable interactions by removing the overlay
+        const rpsImages = btnChoices.querySelectorAll('.rps');
+        rpsImages.forEach(image => {
+            image.style.pointerEvents = 'auto';
+        });
+    }
+    
 
     btnChoices.addEventListener('click', event=>{
         if (event.target.id === "rock"){
@@ -57,15 +68,22 @@ function play(choiceOfPlayer)
 {
     const shuffledRpsArr = _.shuffle(rpsArr);
     const randomRps = shuffledRpsArr[0];
-    console.log('Computer chose ' + randomRps);
-    console.log('Player chose ' + choiceOfPlayer);
+    //console.log('Computer chose ' + randomRps);
+    //console.log('Player chose ' + choiceOfPlayer);
 
-    if (randomRps === 'rock')
+    if (randomRps === 'rock') {
+        //console.log('rock');
         computerImg.src = './img/rock.png';
-    else if (randomRps === 'paper')
+    }
+    else if (randomRps === 'paper') {
+        //console.log('paper');
         computerImg.src = './img/paper.png';
-    else
+    }
+    else {
+        //console.log('scissors');
         computerImg.src = './img/scissors.png';
+    }
+        
     
     if (choiceOfPlayer === randomRps)
     {
@@ -93,6 +111,12 @@ function play(choiceOfPlayer)
         h3Points.innerHTML=''; 
         h2ChoiceInfo.innerText = `You chose ${choiceOfPlayer} and Computer chose ${randomRps}`;
        
+        //disabling the imgs when the game ends
+        const rpsImages = btnChoices.querySelectorAll('.rps');
+        rpsImages.forEach(image => {
+            image.style.pointerEvents = 'none';
+        });
+
         //computer wins
         //so the game must end here  
         endGame();  
@@ -105,12 +129,18 @@ function play(choiceOfPlayer)
 }
 
 
+const pComputerWon = document.createElement('p');
 
-//end game means that 
+//end game means that the computer won the round the game is over
+//checking if the player has already had a highscore before
+//if the current score is greater than the previous highscore then it updates the highscore
+//if it is the first time the player plays
+//then a new object with the name and the score add to the json file in backend
+//Also it shows a start new game button and resets everything
 async function endGame()
 {
-    const pComputerWon = document.createElement('p');
-    pComputerWon.innerText = 'Computer won over you. Start the game again! Your score is ${playerScore}';
+    
+    pComputerWon.innerText = `Computer won. Game over! Start the game again! Your score is ${playerScore}`;
     gameContainer.append(pComputerWon);
 
     
@@ -131,16 +161,15 @@ async function endGame()
     } else {
         newPlayer(player);
     }
-   
-    playerScore = 0;
 
-    const btnStartNewGame = document.createElement('button');
+    
     btnStartNewGame.innerText = 'Start new game';
     gameContainer.append(btnStartNewGame);
-
-    btnStartNewGame.addEventListener('click', event=>{
-        getHighscore().then(displayHighscore);
+    alert(`Game over. You got ${playerScore} points!`);
+    getHighscore().then(displayHighscore);
+    btnStartNewGame.addEventListener('click', event=>{ 
         resetGame();
+        
     })
 
 }
@@ -151,6 +180,8 @@ async function endGame()
 //also reseting the containers so that nothing from previous game is visible
 function resetGame()
 {
+    pComputerWon.innerText = '';
+    btnStartNewGame.innerHTML = '';
     computerImg.src="./img/questionMark.png";
     h2ChoiceInfo.innerHTML='';
     h3Points.innerHTML='';
@@ -163,4 +194,3 @@ function resetGame()
 }
         
 
-getHighscore().then(displayHighscore);

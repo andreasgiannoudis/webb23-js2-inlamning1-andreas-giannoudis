@@ -81,6 +81,7 @@ async function getHighscoreForPlayer(playerName) {
       return null;
     }
   }
+  
 
 //exporting so i can use the functions in main.js
 export {getHighscore, newPlayer, updateHighscore, getHighscoreForPlayer};

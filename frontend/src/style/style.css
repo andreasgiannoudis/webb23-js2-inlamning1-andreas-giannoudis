@@ -48,14 +48,22 @@ body, html {
   
 
   .highscore-div {
+    border: 2px solid black;
+    max-width: 300px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding-right: 20px;
+    position: fixed;
+    right: 10;
+    top: 50%; /* Adjust top value as needed */
+    transform: translateY(-50%);
+    
+
 }
 
-.highscore-div h3 {
-    font-size: 24px;
+.highscore-div h2 {
+    font-size: 22px;
     margin-bottom: 10px;
 }
 
@@ -82,4 +90,27 @@ body, html {
   max-width: 70px;
   max-height: 70px;
 
+}
+
+.game-container {
+  max-width: 500px;
+}
+
+
+.container.player {
+  display: flex;
+
+  align-items: center;
+ 
+}
+
+.container.player img.rps {
+  width: 70px;
+  height: 70px;
+  cursor: pointer; /* Add pointer cursor */
+  
+}
+
+.container.player img.rps:last-child {
+  margin-right: 0; /* Remove margin for the last image */
 }
