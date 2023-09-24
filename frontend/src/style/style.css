@@ -3,9 +3,8 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-
-    background: rgb(219,219,238);
-    background: linear-gradient(90deg, rgba(219,219,238,1) 11%, rgba(211,187,233,1) 52%, rgba(132,157,224,1) 100%);
+    background: rgb(229,229,242);
+    background: linear-gradient(222deg, rgba(229,229,242,1) 11%, rgba(200,174,224,1) 52%, rgba(128,153,222,1) 100%);
   }
 
   .welcome {
@@ -48,23 +47,36 @@ body, html {
   
 
   .highscore-div {
-    border: 2px solid black;
+    outline: 1px solid rgb(81, 81, 81);
+    background-color:#d0dde6;
     max-width: 300px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding-right: 20px;
+    border-radius: 22px;
     position: fixed;
-    right: 10;
-    top: 50%; /* Adjust top value as needed */
+    right: 50;
+    top: 50%; 
     transform: translateY(-50%);
-    
+    box-shadow: 5px 5px 10px 4px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 5px 5px 10px 4px rgba(0,0,0,0.10);
+    -moz-box-shadow: 5px 5px 10px 4px rgba(0,0,0,0.10);
+    transition: 0.6s ease 0s;
+}
 
+.highscore-div:hover{
+  box-shadow: 5px 5px 10px 4px rgba(0,0,0,0.22);
+  -webkit-box-shadow: 5px 5px 10px 4px rgba(0,0,0,0.22);
+  -moz-box-shadow: 5px 5px 10px 4px rgba(0,0,0,0.22);
+  outline: 1px solid rgb(155, 106, 106);
+  background-color: #f3f3f3;
 }
 
 .highscore-div h2 {
     font-size: 22px;
-    margin-bottom: 10px;
+    margin-top: 0px;
+    text-align: center;
 }
 
 .highscore {
@@ -73,7 +85,7 @@ body, html {
 }
 
 .highscore li {
-    margin-bottom: 10px;
+    margin: 10px;
 }
 
 .highscore li span {
@@ -107,10 +119,10 @@ body, html {
 .container.player img.rps {
   width: 70px;
   height: 70px;
-  cursor: pointer; /* Add pointer cursor */
+  cursor: pointer; 
   
 }
 
 .container.player img.rps:last-child {
-  margin-right: 0; /* Remove margin for the last image */
+  margin-right: 0; 
 }

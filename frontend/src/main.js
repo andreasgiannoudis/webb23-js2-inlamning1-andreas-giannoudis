@@ -21,34 +21,44 @@ getHighscore().then(displayHighscore);
 
 formNameOfPlayer.addEventListener('submit', async event=>{
     event.preventDefault();
-    formNameOfPlayer.style.visibility = 'hidden';
+    
     playerName = document.querySelector('#playerName').value;
-    const h3Name = document.createElement('h3');
-    h3Name.innerText = `Hello ${playerName}, let's play the rock paper scissors game!`;
-    welcomePlayer.append(h3Name);
-
-    if (playerName) {
-        // Enable interactions by removing the overlay
-        const rpsImages = btnChoices.querySelectorAll('.rps');
-        rpsImages.forEach(image => {
-            image.style.pointerEvents = 'auto';
-        });
-    }
     
 
-    btnChoices.addEventListener('click', event=>{
-        if (event.target.id === "rock"){
-            play('rock');
-        }
-        else if (event.target.id === "paper")
-        {
-            play('paper');
-        }
-        else if (event.target.id === "scissors")
-        {
-            play('scissors');
-        }
-    })
+    if(playerName == '')
+    {
+        alert('you must write your name');
+    }
+    else {
+        
+    const h3Name = document.createElement('h3');
+        formNameOfPlayer.style.visibility = 'hidden';
+        h3Name.innerText = `Hello ${playerName}, let's play the rock paper scissors game!`;
+    welcomePlayer.append(h3Name);
+        
+            const rpsImages = btnChoices.querySelectorAll('.rps');
+            rpsImages.forEach(image => {
+                image.style.pointerEvents = 'auto';
+            });
+        
+        
+    
+        btnChoices.addEventListener('click', event=>{
+            if (event.target.id === "rock"){
+                play('rock');
+            }
+            else if (event.target.id === "paper")
+            {
+                play('paper');
+            }
+            else if (event.target.id === "scissors")
+            {
+                play('scissors');
+            }
+        })
+    }
+
+    
     
     
 
@@ -91,7 +101,6 @@ function play(choiceOfPlayer)
         h3Points.innerHTML='';   
         h2ChoiceInfo.innerText = `It's a tie. You chose ${choiceOfPlayer} and Computer chose ${randomRps}`;
         h3Points.innerText = `Your score so far is: ${playerScore}`;
-        //gameContainer.append(h2ChoiceInfo, h3Points);
     }
     else if(choiceOfPlayer === "rock" && randomRps=== "scissors" ||
     choiceOfPlayer === "scissors" && randomRps=== "paper" ||
@@ -103,23 +112,26 @@ function play(choiceOfPlayer)
         playerScore++;
         h2ChoiceInfo.innerText = `You chose ${choiceOfPlayer} and Computer chose ${randomRps}`;
         h3Points.innerText = `You won this round and got 1 more point. Your score so far is: ${playerScore}`;
-        //gameContainer.append(h2ChoiceInfo, h3Points);
     }
     else 
     {
         h2ChoiceInfo.innerHTML=''; 
         h3Points.innerHTML=''; 
         h2ChoiceInfo.innerText = `You chose ${choiceOfPlayer} and Computer chose ${randomRps}`;
-       
+        pComputerWon.innerText = `Computer won. Game over! Start the game again! You got ${playerScore} points`;
+        gameContainer.append(pComputerWon);
+
         //disabling the imgs when the game ends
-        const rpsImages = btnChoices.querySelectorAll('.rps');
+        const rpsImages = btnChoices.querySelector('.rps');
         rpsImages.forEach(image => {
             image.style.pointerEvents = 'none';
         });
 
         //computer wins
         //so the game must end here  
+        console.log('Points before reset: ' + playerScore);
         endGame();  
+        console.log('Points after reset: ' + playerScore);
     }
 
     gameContainer.append(h2ChoiceInfo, h3Points);
@@ -138,12 +150,7 @@ const pComputerWon = document.createElement('p');
 //then a new object with the name and the score add to the json file in backend
 //Also it shows a start new game button and resets everything
 async function endGame()
-{
-    
-    pComputerWon.innerText = `Computer won. Game over! Start the game again! Your score is ${playerScore}`;
-    gameContainer.append(pComputerWon);
-
-    
+{  
     const player = {
         name: playerName,
         score: playerScore
@@ -161,16 +168,15 @@ async function endGame()
     } else {
         newPlayer(player);
     }
+    
 
     
     btnStartNewGame.innerText = 'Start new game';
     gameContainer.append(btnStartNewGame);
-    alert(`Game over. You got ${playerScore} points!`);
     getHighscore().then(displayHighscore);
     btnStartNewGame.addEventListener('click', event=>{ 
         resetGame();
-        
-    })
+    });
 
 }
 

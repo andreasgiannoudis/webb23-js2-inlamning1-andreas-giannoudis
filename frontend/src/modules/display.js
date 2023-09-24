@@ -7,6 +7,7 @@ function displayHighscore(highscoreUsers) {
     const h2Highscore = document.createElement('h2');
     h2Highscore.innerText = 'Highscore';
     highscoreList.append(h2Highscore);
+    let numberOfPlayers = 1;
 
     if (highscoreUsers.length === 0) {
         const h2NoHighscoreYet = document.createElement('h2');
@@ -17,8 +18,9 @@ function displayHighscore(highscoreUsers) {
         for (const highscorePlayer of highscoreUsers) {
             if (highscorePlayer.name != null) {
                 const listItem = document.createElement('li');
-                listItem.innerHTML = `<span>Name: ${highscorePlayer.name}</span> <span>Score: ${highscorePlayer.score}</span>`;
+                listItem.innerHTML = `<span>${numberOfPlayers}. Name: ${highscorePlayer.name}</span> <span>Score: ${highscorePlayer.score}</span>`;
                 highscoreList.appendChild(listItem);
+                numberOfPlayers++;
             }
 
 
