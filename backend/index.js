@@ -9,11 +9,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 const MAX_OBJECTS = 5;
 
@@ -38,10 +38,10 @@ app.post('/score', (req, res) => {
   res.send('New Highscore added!');
 })
 
-app.patch('/score', (req,res)=>{
+app.patch('/score', (req, res) => {
   const { name, score } = req.body;
   const rawData = fs.readFileSync('./data/highscore.json', 'utf-8');
-  const highscoreList = JSON.parse(rawData);
+  let highscoreList = JSON.parse(rawData);
   let playerFound = false;
 
   for (const highscore of highscoreList) {
@@ -50,16 +50,21 @@ app.patch('/score', (req,res)=>{
         highscore.score = score;
         playerFound = true;
         break;
-      }  
+      }
     }
   }
-    const updatedHighscoreInfo = JSON.stringify(highscoreList);
-    fs.writeFileSync('./data/highscore.json', updatedHighscoreInfo);
-    res.send('New Highscore updated!');
+  highscoreList = _.sortBy(highscoreList, 'score').reverse();
+  let sortedHighscores = highscoreList.slice(0, MAX_OBJECTS);
+
+  let updatedHighscoreInfo = JSON.stringify(sortedHighscores);
+  fs.writeFileSync('./data/highscore.json', updatedHighscoreInfo);
+  res.send('New Highscore updated!');
 })
 
 
 
-  app.listen(3000, ()=>{
-    console.log('Listening to post 3000...');
+
+
+app.listen(3000, () => {
+  console.log('Listening to post 3000...');
 })
