@@ -126,3 +126,8 @@ body, html {
 .container.player img.rps:last-child {
   margin-right: 0; 
 }
+
+
+.computer-img{
+ margin-left: 8%;
+}

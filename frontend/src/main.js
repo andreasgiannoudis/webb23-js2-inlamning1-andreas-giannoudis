@@ -17,7 +17,6 @@ const h3Points = document.createElement('h3');
 const btnStartNewGame = document.createElement('button');
 let handleButtonClick;
 
-const computerImg = document.querySelector('#computerImg');
 const questionImg = document.querySelector('#questionmark');
 
 
@@ -27,15 +26,12 @@ getHighscore().then(displayHighscore);
 
 formNameOfPlayer.addEventListener('submit', async event => {
     event.preventDefault();
-   
-
     playerName = document.querySelector('#playerName').value;
 
     if (playerName == '') {
         alert('You must write your name to be able to play');
     }
     else {
-
         const h3Name = document.createElement('h3');
         formNameOfPlayer.style.visibility = 'hidden';
         h3Name.innerText = `Hello ${playerName}, let's play the rock paper scissors game!`;
@@ -46,9 +42,7 @@ formNameOfPlayer.addEventListener('submit', async event => {
             image.style.pointerEvents = 'auto';
         });
 
-
-
-        
+    
         handleButtonClick = (event) => {
             event.preventDefault();
           
@@ -131,6 +125,7 @@ function play(choiceOfPlayer) {
             image.style.pointerEvents = 'none';
         });
 
+
         //computer wins
         //so the game must end here       
         endGame();
@@ -157,13 +152,12 @@ async function endGame() {
         if (playerScore > previousHighscore.score) {
             await updateHighscore(player);
             const pNewHighscore = document.createElement('p');
-            pNewHighscore.innerText = 'New Highscore updated!';
+            pNewHighscore.innerText = 'Well done! New Highscore updated!';
             gameContainer.append(pNewHighscore);
         }
     } else {
         newPlayer(player);
     }
-   
 
     btnChoices.removeEventListener('click', handleButtonClick);
     btnStartNewGame.innerText = 'Start new game';
@@ -186,6 +180,8 @@ function resetGame() {
     playerName.innerText = '';
     welcomePlayer.innerText = '';
     formNameOfPlayer.style.visibility = '';
+    const imgUrl = new URL('./img/questionMark.png', import.meta.url);
+    questionImg.src = imgUrl.href;
     playerScore = 0;
     formNameOfPlayer.reset();
 }
