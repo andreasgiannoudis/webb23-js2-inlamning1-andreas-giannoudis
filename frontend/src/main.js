@@ -1,5 +1,5 @@
 import { getHighscore, newPlayer, updateHighscore, getHighscoreForPlayer } from "./modules/backendService.js";
-import { displayHighscore } from "./modules/display.js";
+import { displayHighscore } from "./modules/displayHighscore.js";
 import _ from 'underscore';
 
 
@@ -15,12 +15,19 @@ const gameContainer = document.querySelector('#gameContainer');
 const h2ChoiceInfo = document.createElement('h2');
 const h3Points = document.createElement('h3');
 const btnStartNewGame = document.createElement('button');
+let handleButtonClick;
+
+const computerImg = document.querySelector('#computerImg');
+const questionImg = document.querySelector('#questionmark');
 
 
 getHighscore().then(displayHighscore);
-let handleButtonClick;
+
+
+
 formNameOfPlayer.addEventListener('submit', async event => {
     event.preventDefault();
+   
 
     playerName = document.querySelector('#playerName').value;
 
@@ -63,10 +70,8 @@ formNameOfPlayer.addEventListener('submit', async event => {
 
 let randomRps = null;
 function generateRandomRps() {
-    console.log('generateRandomRps called');
     const shuffledRpsArr = _.shuffle(rpsArr);
     randomRps = shuffledRpsArr[0];
-    console.log(randomRps);
 }
 
 
@@ -79,6 +84,21 @@ function generateRandomRps() {
 function play(choiceOfPlayer) {
     generateRandomRps();
 
+    if (randomRps == 'rock')
+    {
+        const imgUrl = new URL('./img/rock.png', import.meta.url);
+        questionImg.src = imgUrl.href;
+    }
+    else if (randomRps == 'paper')
+    {
+        const imgUrl = new URL('./img/paper.png', import.meta.url);
+        questionImg.src = imgUrl.href;
+    }
+    else
+    {
+        const imgUrl = new URL('./img/scissors.png', import.meta.url);
+        questionImg.src = imgUrl.href;
+    }
     
 
     if (choiceOfPlayer === randomRps) {
@@ -98,6 +118,7 @@ function play(choiceOfPlayer) {
         gameContainer.append(h2ChoiceInfo, h3Points);
     }
     else {
+        
         h2ChoiceInfo.innerText = '';
         h3Points.innerText = '';
         h2ChoiceInfo.innerText = `You chose ${choiceOfPlayer} and Computer chose ${randomRps}`;
@@ -111,12 +132,8 @@ function play(choiceOfPlayer) {
         });
 
         //computer wins
-        //so the game must end here  
-        //console.log('Points before reset: ' + playerScore);
-
+        //so the game must end here       
         endGame();
-
-        //console.log('Points after reset: ' + playerScore);
     }
 }
 
@@ -146,17 +163,14 @@ async function endGame() {
     } else {
         newPlayer(player);
     }
+   
 
     btnChoices.removeEventListener('click', handleButtonClick);
-
-
     btnStartNewGame.innerText = 'Start new game';
     gameContainer.append(btnStartNewGame);
-    getHighscore().then(displayHighscore);
     btnStartNewGame.addEventListener('click', event => {
         resetGame();
     });
-
 }
 
 
@@ -164,6 +178,7 @@ async function endGame() {
 //reseting the playerScore to 0
 //also reseting the containers so that nothing from previous game is visible
 function resetGame() {
+    getHighscore().then(displayHighscore);
     h2ChoiceInfo.innerText = '';
     h3Points.innerText = '';
     btnStartNewGame.innerText = '';
